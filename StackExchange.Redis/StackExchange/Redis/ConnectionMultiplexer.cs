@@ -952,6 +952,8 @@ namespace StackExchange.Redis
                 ConfigurationChangedChannel = Encoding.UTF8.GetBytes(configChannel);
             }
             lastHeartbeatTicks = Environment.TickCount;
+
+            AlwaysCompleteAsync = configuration.AlwaysCompleteAsync;
         }
 
         partial void OnCreateReaderWriter(ConfigurationOptions configuration);
@@ -1816,6 +1818,8 @@ namespace StackExchange.Redis
         /// Gets or sets whether asynchronous operations should be invoked in a way that guarantees their original delivery order
         /// </summary>
         public bool PreserveAsyncOrder { get; set; }
+
+        public bool AlwaysCompleteAsync { get; set; }
 
         /// <summary>
         /// Indicates whether any servers are connected

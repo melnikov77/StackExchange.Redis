@@ -350,6 +350,7 @@ namespace StackExchange.Redis
                 configCheckSeconds = configCheckSeconds,
                 responseTimeout = responseTimeout,
 				defaultDatabase = defaultDatabase,
+                AlwaysCompleteAsync = AlwaysCompleteAsync,
             };
             foreach (var item in endpoints)
                 options.endpoints.Add(item);
@@ -685,5 +686,7 @@ namespace StackExchange.Redis
 
             return null;
         }
+
+        public bool AlwaysCompleteAsync { get; set; }
     }
 }

@@ -26,6 +26,15 @@ namespace StackExchange.Redis
         public void CompleteSyncOrAsync(ICompletable operation)
         {
             if (operation == null) return;
+
+            if (multiplexer.AlwaysCompleteAsync)
+            {
+                multiplexer.Trace("Using thread-pool for asynchronous completion(AlwaysCompleteAsync)", name);
+                ThreadPool.QueueUserWorkItem(anyOrderCompletionHandler, operation);
+                Interlocked.Increment(ref completedAsync); // k, *technically* we haven't actually completed this yet, but: close enough
+                return;
+            }
+
             if (operation.TryComplete(false))
             {
                 multiplexer.Trace("Completed synchronously: " + operation, name);
